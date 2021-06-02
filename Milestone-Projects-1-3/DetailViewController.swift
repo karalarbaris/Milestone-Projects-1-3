@@ -17,9 +17,22 @@ class DetailViewController: UIViewController {
         if let img = selectedImage {
             imageView.image = UIImage(named: img)
         }
-        // Do any additional setup after loading the view.
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+
     }
     
+    @objc func shareTapped() {
+        guard let img = imageView.image else {
+            print("No image found")
+            return
+        }
+        
+        let vc = UIActivityViewController(activityItems: [img], applicationActivities: [])
+        //For ipad this is required
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true, completion: nil)
+    }
 
     /*
     // MARK: - Navigation
